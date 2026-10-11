@@ -1,3 +1,65 @@
+# homework
+## Exercise Progress
+
+All Ex0–Ex6 tests pass:
+
+![make exercise all green](EX0-EX6.png)
+
+## Architecture diagram
+
+                          OFF-CHAIN WORLD
+        ┌──────────────────────────┐     ┌──────────────────────────┐
+        │  Reporter                │     │  SPV / Custodian         │
+        │  (b) ATTESTATION         │     │  (a) CUSTODY             │
+        │                          │     │                          │
+        │  Only party that sees    │     │  Legally holds the       │
+        │  the true NAV            │     │  US Treasury bills       │
+        └────────────┬─────────────┘     └────────────┬─────────────┘
+                     │                                │
+                attest(nav)                    realHoldings()
+                     │                                │
+═════════════════════╪════════════════════════════════╪════════════════════
+                     ▼                                ▼
+                          ON-CHAIN WORLD
+
+    ┌──────────────────┐    subscribe(USDC)    ┌─────────────────────┐
+    │   User / Alice   │──────────────────────►│    TBillVault       │
+    │                  │◄────── mint(tBILL) ───│  (entry / ledger)   │
+    └────────┬─────────┘                       └──────────┬──────────┘
+             │                                            │
+             │ approve + enqueue(tBILL)                   │ navPerShare()
+             ▼                                            ▼
+    ┌──────────────────┐                       ┌─────────────────────┐
+    │ ComplianceReg    │◄────── whitelist ─────│   MockPriceFeed     │
+    │ (d) ADMISSION    │         check         │  NAV feed (8 dec.)  │
+    └──────────────────┘                       └─────────────────────┘
+             ▲
+             │  whitelist check on both sender and receiver
+             │
+    ┌──────────────────┐      transferFrom     ┌─────────────────────┐
+    │   TBillToken     │◄──────────────────────│  RedemptionQueue    │
+    │   18 decimals    │──────── burn ────────►│  (c) REDEMPTION     │
+    └──────────────────┘                       └──────────┬──────────┘
+                                                          │
+                                                          │ claim()
+                                                          ▼
+                                                 User receives USDC
+
+──────────────────────────────────────────────────────────────────────
+  CASH BRIDGE:   User ──USDC──► Vault ──USDC──► SPV   (off-chain T-bill purchase)
+                 SPV  ──USDC──► Queue ──USDC──► User   (claim after T+1)
+
+  SHARE BRIDGE:  Vault ──mint──► User ──enqueue──► Queue ──burn──►
+──────────────────────────────────────────────────────────────────────
+
+  FOUR PLANKS
+  (a) CUSTODY        MockTBillCustodian / SPV
+  (b) ATTESTATION    Reporter + MockPriceFeed + vault.attest()
+  (c) REDEMPTION     RedemptionQueue (enqueue / settle / claim)
+  (d) ADMISSION      ComplianceRegistry + TBillToken whitelist
+
+  
+
 # Lab 2 — How to Tokenize an RWA (Tokenized T-Bills)
 
 In Lab 1 the collateral was **itself a token**. That is why the whole thing could prove itself:
