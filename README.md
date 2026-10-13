@@ -1,6 +1,6 @@
 # homework
 ## Exercise Progress
-
+Github repo link:https://github.com/ZZZTY-z/lab2
 All Ex0–Ex6 tests pass:
 
 ![make exercise all green](EX0-EX6.png)
@@ -58,7 +58,21 @@ All Ex0–Ex6 tests pass:
   (c) REDEMPTION     RedemptionQueue (enqueue / settle / claim)
   (d) ADMISSION      ComplianceRegistry + TBillToken whitelist
 
-  
+## Tier 2 Deployment (Sepolia)
+
+Network: Ethereum Sepolia (chain ID 11155111)
+Deployer / admin: `0x4c7165aa636859f467EF64a927aF7Ea97a17c42e`
+
+| Contract | Plank | Address | Etherscan |
+|---|---|---|---|
+| TBillVault | (b) attestation | `0x5aB438c637fA6054Fc2ed6C6E4D75E6d09164E9b` | [verified](https://sepolia.etherscan.io/address/0x5aB438c637fA6054Fc2ed6C6E4D75E6d09164E9b#code) |
+| TBillToken | (d) admission | `0x051BB1CF8DC1a6Dd0e93CBC405DA3BEC4BA90c46` | [verified](https://sepolia.etherscan.io/address/0x051BB1CF8DC1a6Dd0e93CBC405DA3BEC4BA90c46#code) |
+| RedemptionQueue | (c) redemption | `0x537296746B03661B248BeE4758fd4f5BA4ac04e7` | [verified](https://sepolia.etherscan.io/address/0x537296746B03661B248BeE4758fd4f5BA4ac04e7#code) |
+| MockTBillCustodian | (a) custody | `0xd9b8CDe8A725b703ec32F3F07e90E078C30A7e39` | [verified](https://sepolia.etherscan.io/address/0xd9b8CDe8A725b703ec32F3F07e90E078C30A7e39#code) |
+| MockUSDC | cash | `0xca206607f4BFB538e45B306208Cc8c0d95394d2e` | [verified](https://sepolia.etherscan.io/address/0xca206607f4BFB538e45B306208Cc8c0d95394d2e#code) |
+| ComplianceRegistry | (d) admission | `0x7dD5a4ab8fD239fC398D3ca05A45F189d6d632E0` | [verified](https://sepolia.etherscan.io/address/0x7dD5a4ab8fD239fC398D3ca05A45F189d6d632E0#code) |
+| MockPriceFeed | (b) NAV oracle | `0xE18CAC66142cFB6043a59201e020A880c5043aa2` | [verified](https://sepolia.etherscan.io/address/0xE18CAC66142cFB6043a59201e020A880c5043aa2#code) |
+
 
 # Lab 2 — How to Tokenize an RWA (Tokenized T-Bills)
 
